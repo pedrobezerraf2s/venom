@@ -61,7 +61,11 @@ export async function sendLinkPreview(chatId, url, text, thumbnail) {
       await Promise.all(window.Store.addAndSendMsgToChat(chat, message))
     )[1];
     let m = { type: 'LinkPreview', url: url, text: text };
-    if (result === 'success' || result === 'OK') {
+    if (
+      result === 'success' ||
+      result === 'OK' ||
+      result.messageSendResult === 'OK'
+    ) {
       let obj = WAPI.scope(newMsgId, false, result, null);
       Object.assign(obj, m);
       return obj;

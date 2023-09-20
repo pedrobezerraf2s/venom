@@ -145,7 +145,7 @@ export async function create(
       sessionOrOption.replace(/\s/g, '').length
     ) {
       session = sessionOrOption.replace(/\s/g, '');
-      options = { session };
+      options['session'] = session;
     } else if (typeof sessionOrOption === 'object') {
       session = sessionOrOption.session || session;
       catchQR = sessionOrOption.catchQR || catchQR;
@@ -156,6 +156,14 @@ export async function create(
 
     const spinnies = getSpinnies({
       disableSpins: options ? options.disableSpins : false
+    });
+
+    spinnies.add(`donate-${session}`, {
+      text: `....`
+    });
+
+    spinnies.fail(`donate-${session}`, {
+      text: `Help Keep This Project Going! Know more: https://github.com/orkestral/venom/blob/master/docs/getting-started/donate.md`
     });
 
     spinnies.add(`node-version-${session}`, {
